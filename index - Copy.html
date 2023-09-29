@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <style>
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #rectangle {
+            height: 80%;
+            background: cornflowerblue;
+            width: 80%;
+            overflow: hidden !important;
+        }
+
+        .box {
+            height: 250px;
+            width: 200px;
+            position: absolute;
+            overflow: hidden;
+            transform: rotate(15deg);
+        }
+
+        .box img {
+            transform: translateY(1000%);
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="rectangle">
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+        </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+        </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
+        integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        // const btn = document.querySelector("#throttle");
+
+        // Throttling Function
+        const throttleFunction = (func, delay) => {
+
+            // Previously called time of the function
+            let prev = 0;
+            return (...args) => {
+                // Current called time of the function
+                let now = new Date().getTime();
+
+                // Logging the difference between previously
+                // called and current called timings
+                console.log(now - prev, delay);
+
+                // If difference is greater than delay call
+                // the function again.
+                if (now - prev > delay) {
+                    prev = now;
+
+                    // "..." is the spread operator here
+                    // returning the function with the
+                    // array of arguments
+                    return func(...args);
+                }
+            }
+        }
+        document.querySelector("#rectangle").addEventListener("mousemove", throttleFunction((dets) => {
+
+            // var array = ["https://source.unsplash.com/random"]
+            // array.forEach( arr => {
+            //     return arr
+            // });
+
+            var div = document.createElement("div")
+            div.classList.add("box")
+            div.style.left = dets.clientX + "px"
+            div.style.top = dets.clientY + "px"
+            var img = document.createElement("img")
+            img.setAttribute("src", "https://source.unsplash.com/random/nature")
+            div.appendChild(img);
+            document.body.appendChild(div)
+
+            gsap.to(img, {
+                y: "0",
+                duration: .2
+            })
+            gsap.to(img, {
+                y: "100%",
+                delay: .4
+            })
+
+            setTimeout(function () {
+                div.remove()
+            }, 800)
+
+        }, 150));
+    </script>
+</body>
+
+</html>
